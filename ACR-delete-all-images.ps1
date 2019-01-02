@@ -3,11 +3,11 @@
 # that pull images via manifest digest.
 
 # Change to '$TRUE' to enable image delete
-$enableDelete = $FALSE
+$enableDelete = $TRUE
 
 # Modify for your environment
-$registry = "myregistry"
-$repository = "myrepository"
+$registry = "nooksandcrannies"
+$repository = "lognook"
 
 if ($enableDelete) {
     az acr repository show-manifests --name $registry --repository $repository --query "[?tags==null].digest" -o tsv `
