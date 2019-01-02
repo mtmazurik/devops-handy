@@ -12,8 +12,8 @@ REPOSITORY=lognook
 # Delete all untagged (orphaned) images
 if [ "$ENABLE_DELETE" = true ]
 then
-    az acr repository show-manifests --name $REGISTRY --repository $REPOSITORY  -o tsv \
-    | xargs -I% az acr repository delete --name $REGISTRY --image $REPOSITORY@% --yes
+    az acr repository show-manifests --name $REGISTRY --repository $REPOSITORY  -o table \
+    | cut -f 1 -d ' ' | xargs -I% az acr repository delete --name $REGISTRY --image $REPOSITORY@% --yes
 else
     echo "No data deleted. Set ENABLE_DELETE=true to enable image deletion."
 fi
