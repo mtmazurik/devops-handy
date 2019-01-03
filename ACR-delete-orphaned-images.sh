@@ -11,8 +11,8 @@ REPOSITORY=lognook
 
 # Delete all untagged (orphaned) images
 if [ "$ENABLE_DELETE" = true ]
-then
-    az acr repository show-manifests --name $REGISTRY --repository $REPOSITORY --query "[?tags==null].digest" -o table \
+then                                                                                    # JMESpath query, yields all untagged (orphaned) images' digest id
+    az acr repository show-manifests --name $REGISTRY --repository $REPOSITORY --query "[?!(tags[?'*'])].digest" -o table \
     | cut -f 1 -d ' ' | xargs -I% az acr repository delete --name $REGISTRY --image $REPOSITORY@% --yes
 else
     echo "No data deleted. Set ENABLE_DELETE=true to enable image deletion."
